@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
+import ShopQRCode from "./components/ShopQRCode";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://print-kiosk-backend-t470.onrender.com";
 
@@ -197,9 +198,7 @@ function App() {
                 <span className="stat-label">Revenue</span>
               </div>
             </div>
-            <div className="qr-hint">
-              Customer link: <code>printkaro-customer.vercel.app/?shop={shop.shopId}</code>
-            </div>
+            <ShopQRCode shopId={shop.shopId} shopName={shop.shopName} />
           </div>
         ))}
       </div>

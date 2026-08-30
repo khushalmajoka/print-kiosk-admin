@@ -1,0 +1,161 @@
+/* ---------- Simple dashboard view ---------- */
+.qr-simple {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.qr-simple-canvas {
+  flex-shrink: 0;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.qr-simple-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.qr-simple-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  margin: 0;
+}
+
+.qr-simple-url {
+  font-size: 12px;
+  color: #666;
+  word-break: break-all;
+}
+
+.secondary-btn.small {
+  width: fit-content;
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.secondary-btn.small:hover {
+  background: #eee;
+}
+
+/* ---------- Fancy printable card: off-screen, download-only ---------- */
+.qr-offscreen {
+  position: fixed;
+  top: 0;
+  left: -9999px; /* screen se bahar, but DOM mein render hota hai so toPng use kar sake */
+  pointer-events: none;
+}
+
+.qr-card {
+  position: relative;
+  width: 320px;
+  padding: 22px 24px 26px;
+  background: #F7F3EA;
+  border: 1.5px solid #17161A;
+  border-radius: 4px;
+  font-family: "Space Grotesk", sans-serif;
+  color: #17161A;
+  box-sizing: border-box;
+}
+
+.qr-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #17161A;
+  color: #F7F3EA;
+  padding: 10px 14px;
+  border-radius: 3px;
+  margin: 0 0 18px;
+}
+
+.qr-card-brand {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+}
+
+.qr-card-brand-icon {
+  display: inline-flex;
+  color: #E24B3D;
+}
+
+.qr-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.qr-card-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8A8578;
+  margin: 0 0 4px;
+}
+
+.qr-card-shopname {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  line-height: 1.2;
+}
+
+.qr-frame {
+  padding: 10px;
+  background: #fff;
+  border: 1.5px dashed #17161A;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.qr-frame-inner {
+  display: flex;
+}
+
+.qr-card-tagline {
+  font-size: 17px;
+  font-weight: 700;
+  color: #E24B3D;
+  margin: 0;
+}
+
+.qr-card-perforation {
+  height: 0;
+  border-top: 1.5px dashed #8A8578;
+  margin: 20px -24px 14px;
+}
+
+.qr-card-footer {
+  text-align: center;
+}
+
+.qr-card-steps {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #17161A;
+  margin: 0;
+}
+
+.qr-card-steps .arrow {
+  color: #2AA9C9;
+  margin: 0 6px;
+}
