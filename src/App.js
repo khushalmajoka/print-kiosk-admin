@@ -98,7 +98,7 @@ function App() {
 
   async function handleGenerateAgentKey(shopId, shopNameForModal) {
     const confirmed = window.confirm(
-      `Naya agent key generate karein "${shopNameForModal}" ke liye?\n\nPurani key (agar hai) turant kaam karna band kar degi — Local Agent ke config.json mein naya key update karna hoga.`
+      `Generate a new agent key for "${shopNameForModal}"?\n\nThe old key (if any) will stop working immediately — you'll need to update it in that shop's Local Agent config.json.`
     );
     if (!confirmed) return;
 
@@ -108,7 +108,7 @@ function App() {
         method: "POST",
         headers: { "x-admin-key": adminKey },
       });
-      if (!res.ok) throw new Error("Agent key generate nahi ho payi.");
+      if (!res.ok) throw new Error("Failed to generate agent key.");
       const data = await res.json();
       setAgentKeyModal({ shopId, shopName: shopNameForModal, key: data.agentKey });
       setAgentKeyCopied(false);
@@ -252,8 +252,9 @@ function App() {
           <div className="agent-key-modal" onClick={(e) => e.stopPropagation()}>
             <h3>Agent Key — {agentKeyModal.shopName}</h3>
             <p className="agent-key-hint">
-              Ye key sirf ek baar dikhegi. Shop ke Local Agent ke <code>config.json</code> mein{" "}
-              <code>"agent_key"</code> field mein paste kar dena, fir agent restart karna.
+              This key is shown only once. Paste it into the{" "}
+              <code>"agent_key"</code> field of that shop's Local Agent{" "}
+              <code>config.json</code>, then restart the agent.
             </p>
             <div className="agent-key-value">
               <code>{agentKeyModal.key}</code>

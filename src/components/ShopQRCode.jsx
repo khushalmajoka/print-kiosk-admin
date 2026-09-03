@@ -24,7 +24,7 @@ export default function ShopQRCode({ shopId, shopName }) {
       link.click();
     } catch (err) {
       console.error("QR card export failed", err);
-      alert("Download fail ho gaya, dobara try karo.");
+      alert("Download failed. Please try again.");
     } finally {
       setDownloading(false);
     }
