@@ -3,6 +3,7 @@ import "./App.css";
 import "./AgentKeyModal.css";
 import ShopQRCode from "./components/ShopQRCode";
 import ConfirmDialog from "./components/ConfirmDialog";
+import BarChart from "./components/BarChart";
 import { useToast } from "./components/Toast";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://print-kiosk-backend-t470.onrender.com";
@@ -173,6 +174,18 @@ function App() {
     { orders: 0, revenue: 0 }
   );
 
+  // Top shops by volume/revenue, for the charts below. Capped at 8 rows so
+  // the chart stays readable as more shops sign up.
+  const topByOrders = [...shops]
+    .sort((a, b) => b.stats.totalOrders - a.stats.totalOrders)
+    .slice(0, 8)
+    .map((s) => ({ label: s.shopName, value: s.stats.totalOrders }));
+
+  const topByRevenue = [...shops]
+    .sort((a, b) => b.stats.estimatedRevenue - a.stats.estimatedRevenue)
+    .slice(0, 8)
+    .map((s) => ({ label: s.shopName, value: s.stats.estimatedRevenue }));
+
   return (
     <div className="admin-page">
       <header className="admin-header">
@@ -196,6 +209,19 @@ function App() {
           <span className="summary-label">Revenue (completed)</span>
         </div>
       </div>
+
+      {shops.length > 0 && (
+        <div className="charts-row">
+          <div className="chart-card">
+            <h3>Orders by shop</h3>
+            <BarChart data={topByOrders} color="var(--indigo-500)" />
+          </div>
+          <div className="chart-card">
+            <h3>Revenue by shop</h3>
+            <BarChart data={topByRevenue} color="var(--green-600)" formatValue={(v) => `₹${v}`} />
+          </div>
+        </div>
+      )}
 
       <div className="section-header">
         <h2>Shops</h2>
