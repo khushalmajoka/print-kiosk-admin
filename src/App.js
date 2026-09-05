@@ -210,7 +210,16 @@ function App() {
 
       <div className="shop-list">
         {!loading && shops.length === 0 && (
-          <p className="empty-state">No shops registered yet.</p>
+          <div className="empty-state-wrap">
+            <div className="empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none">
+                <rect x="4" y="9" width="16" height="10" rx="1" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M7 9V5h10v4" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M9 19v-4h6v4" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </div>
+            <p className="empty-state">No shops registered yet.</p>
+          </div>
         )}
         {shops.map((shop) => (
           <div className="shop-card" key={shop.shopId}>
