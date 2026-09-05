@@ -4,71 +4,73 @@
 .agent-key-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(23, 22, 26, 0.55);
+  background: rgba(15, 23, 42, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 200;
-  padding: 20px;
+  padding: var(--space-5);
 }
 
 .agent-key-modal {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
   max-width: 380px;
   width: 100%;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-lg);
 }
 
 .agent-key-modal h3 {
-  margin: 0 0 10px;
-  font-size: 17px;
-  color: #17161a;
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--ink-900);
 }
 
 .agent-key-hint {
-  font-size: 13px;
-  color: #666;
-  line-height: 1.5;
-  margin: 0 0 16px;
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+  line-height: var(--line-height-relaxed);
+  margin: 0 0 var(--space-4);
 }
 
 .agent-key-hint code {
-  background: #f3f3f3;
+  background: var(--gray-50);
   padding: 1px 5px;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
 }
 
 .agent-key-value {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-bottom: 18px;
+  gap: var(--space-2);
+  background: var(--gray-50);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
 .agent-key-value code {
   flex: 1;
-  font-size: 12.5px;
+  font-size: var(--text-xs);
   word-break: break-all;
-  color: #17161a;
+  color: var(--ink-900);
 }
 
 .copy-btn.small {
   flex-shrink: 0;
-  padding: 5px 10px;
-  font-size: 12px;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 6px;
+  padding: 5px var(--space-2);
+  font-size: var(--text-xs);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
 .copy-btn.small:hover {
-  background: #eee;
+  background: var(--gray-50);
 }

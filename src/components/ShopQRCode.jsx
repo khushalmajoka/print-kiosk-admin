@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { toPng } from "html-to-image";
+import { useToast } from "./Toast";
 import "./ShopQRCode.css";
 
 const CUSTOMER_BASE_URL = "https://printkaro-customer.vercel.app";
 
 export default function ShopQRCode({ shopId, shopName }) {
+  const { showToast } = useToast();
   const cardRef = useRef(null);
   const [downloading, setDownloading] = useState(false);
   const customerUrl = `${CUSTOMER_BASE_URL}/?shop=${shopId}`;
@@ -24,7 +26,7 @@ export default function ShopQRCode({ shopId, shopName }) {
       link.click();
     } catch (err) {
       console.error("QR card export failed", err);
-      alert("Download failed. Please try again.");
+      showToast("Download failed. Please try again.", "error");
     } finally {
       setDownloading(false);
     }
@@ -32,7 +34,7 @@ export default function ShopQRCode({ shopId, shopName }) {
 
   return (
     <>
-      {/* ---- Simple version: dashboard pe yahi dikhta hai ---- */}
+      {/* ---- Simple version: this is what shows on the dashboard ---- */}
       <div className="qr-simple">
         <div className="qr-simple-canvas">
           <QRCodeCanvas value={customerUrl} size={110} level="H" includeMargin={false} />
@@ -46,7 +48,7 @@ export default function ShopQRCode({ shopId, shopName }) {
         </div>
       </div>
 
-      {/* ---- Fancy version: sirf download/PNG ke liye, screen pe kabhi nahi dikhta ---- */}
+      {/* ---- Fancy version: only for the downloaded PNG, never shown on screen ---- */}
       <div className="qr-offscreen">
         <div className="qr-card" ref={cardRef}>
           <div className="qr-card-header">

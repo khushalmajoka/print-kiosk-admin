@@ -65,6 +65,23 @@ body {
 .primary-btn.small { width: auto; padding: 10px var(--space-4); }
 .primary-btn:disabled { background: var(--indigo-200); cursor: not-allowed; }
 
+.secondary-btn {
+  background: var(--indigo-50);
+  color: var(--indigo-500);
+  border: 1px solid var(--indigo-100);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.secondary-btn:hover:not(:disabled) { background: var(--indigo-100); }
+.secondary-btn.small { padding: 8px var(--space-3); }
+.secondary-btn:disabled { color: var(--ink-400); background: var(--gray-50); border-color: var(--border); cursor: not-allowed; }
+
+.agent-key-trigger { width: 100%; margin-top: var(--space-2); }
+
 .error-text { color: var(--red-600); font-size: var(--text-sm); margin: var(--space-1) 0 var(--space-2); }
 
 .admin-header {

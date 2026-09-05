@@ -2,10 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import "./AgentKeyModal.css";
 import ShopQRCode from "./components/ShopQRCode";
+import ConfirmDialog from "./components/ConfirmDialog";
+import { useToast } from "./components/Toast";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://print-kiosk-backend-t470.onrender.com";
 
 function App() {
+  const { showToast } = useToast();
   const [adminKey, setAdminKey] = useState(() => sessionStorage.getItem("printkaro_admin_key"));
   const [keyInput, setKeyInput] = useState("");
   const [authError, setAuthError] = useState(null);
@@ -26,6 +29,7 @@ function App() {
   const [generatingKey, setGeneratingKey] = useState(null); // shopId currently generating
   const [agentKeyModal, setAgentKeyModal] = useState(null); // { shopId, shopName, key } | null
   const [agentKeyCopied, setAgentKeyCopied] = useState(false);
+  const [pendingAgentKeyConfirm, setPendingAgentKeyConfirm] = useState(null); // { shopId, shopName } | null
 
   const fetchShops = useCallback(async (key) => {
     try {
@@ -83,6 +87,7 @@ function App() {
       setCity("");
       setShowRegisterForm(false);
       await fetchShops(adminKey);
+      showToast(`"${shopName}" registered successfully.`, "success");
     } catch (e) {
       setRegisterError(e.message);
     } finally {
@@ -96,11 +101,14 @@ function App() {
     setTimeout(() => setCopiedId(null), 1500);
   }
 
-  async function handleGenerateAgentKey(shopId, shopNameForModal) {
-    const confirmed = window.confirm(
-      `Generate a new agent key for "${shopNameForModal}"?\n\nThe old key (if any) will stop working immediately — you'll need to update it in that shop's Local Agent config.json.`
-    );
-    if (!confirmed) return;
+  function requestGenerateAgentKey(shopId, shopNameForModal) {
+    setPendingAgentKeyConfirm({ shopId, shopName: shopNameForModal });
+  }
+
+  async function confirmGenerateAgentKey() {
+    if (!pendingAgentKeyConfirm) return;
+    const { shopId, shopName: shopNameForModal } = pendingAgentKeyConfirm;
+    setPendingAgentKeyConfirm(null);
 
     setGeneratingKey(shopId);
     try {
@@ -113,7 +121,7 @@ function App() {
       setAgentKeyModal({ shopId, shopName: shopNameForModal, key: data.agentKey });
       setAgentKeyCopied(false);
     } catch (e) {
-      alert(e.message);
+      showToast(e.message, "error");
     } finally {
       setGeneratingKey(null);
     }
@@ -238,7 +246,7 @@ function App() {
 
             <button
               className="secondary-btn small agent-key-trigger"
-              onClick={() => handleGenerateAgentKey(shop.shopId, shop.shopName)}
+              onClick={() => requestGenerateAgentKey(shop.shopId, shop.shopName)}
               disabled={generatingKey === shop.shopId}
             >
               {generatingKey === shop.shopId ? "Generating..." : "🔑 Get Agent Key"}
@@ -246,6 +254,16 @@ function App() {
           </div>
         ))}
       </div>
+
+      {pendingAgentKeyConfirm && (
+        <ConfirmDialog
+          title="Generate a new agent key?"
+          message={`This will replace the current agent key for "${pendingAgentKeyConfirm.shopName}".\n\nThe old key (if any) will stop working immediately — you'll need to update it in that shop's Local Agent config.json.`}
+          confirmLabel="Generate key"
+          onConfirm={confirmGenerateAgentKey}
+          onCancel={() => setPendingAgentKeyConfirm(null)}
+        />
+      )}
 
       {agentKeyModal && (
         <div className="agent-key-backdrop" onClick={() => setAgentKeyModal(null)}>
