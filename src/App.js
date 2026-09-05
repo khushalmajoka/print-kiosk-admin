@@ -7,6 +7,16 @@ import { useToast } from "./components/Toast";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://print-kiosk-backend-t470.onrender.com";
 
+function SkeletonShopCard() {
+  return (
+    <div className="skeleton-shop-card" aria-hidden="true">
+      <div className="skeleton-bar" style={{ width: "50%", height: 14, marginBottom: 12 }} />
+      <div className="skeleton-bar" style={{ width: "100%", height: 44, marginBottom: 10, borderRadius: 8 }} />
+      <div className="skeleton-bar" style={{ width: "100%", height: 60, borderRadius: 8 }} />
+    </div>
+  );
+}
+
 function App() {
   const { showToast } = useToast();
   const [adminKey, setAdminKey] = useState(() => sessionStorage.getItem("printkaro_admin_key"));
@@ -206,9 +216,13 @@ function App() {
         </form>
       )}
 
-      {loading && <p className="loading-text">Loading...</p>}
-
       <div className="shop-list">
+        {loading && (
+          <>
+            <SkeletonShopCard />
+            <SkeletonShopCard />
+          </>
+        )}
         {!loading && shops.length === 0 && (
           <div className="empty-state-wrap">
             <div className="empty-icon" aria-hidden="true">
